@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RN Collection | Smart Tools</title>
+    <style>
+        body { font-family: sans-serif; background: #0a0a0a; color: #fff; text-align: center; padding: 20px; }
+        .box { background: #151515; padding: 30px; border-radius: 15px; border: 1px solid #00d2ff; max-width: 500px; margin: auto; }
+        h1 { color: #00d2ff; }
+        input { padding: 12px; width: 80%; border-radius: 5px; border: 1px solid #333; background: #222; color: #fff; }
+        button { padding: 12px 25px; background: #00d2ff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+        #res { display: none; margin-top: 20px; }
+        img { width: 100%; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>RN COLLECTION</h1>
+        <p>YouTube Thumbnail Downloader</p>
+        <input type="text" id="url" placeholder="Paste YouTube Link Here">
+        <br>
+        <button onclick="get()">Get Thumbnail</button>
+        <div id="res">
+            <img id="img" src="">
+            <p>Right click and save to download</p>
+        </div>
+    </div>
+    <script>
+        function get() {
+            let u = document.getElementById('url').value;
+            let id = "";
+            if(u.includes("v=")) { id = u.split("v=")[1].substring(0, 11); }
+            else if(u.includes("be/")) { id = u.split("be/")[1].substring(0, 11); }
+            if(id) {
+                document.getElementById('img').src = "https://img.youtube.com/vi/"+id+"/maxresdefault.jpg";
+                document.getElementById('res').style.display = "block";
+            } else { alert("Link sahi nahi hai bhai!"); }
+        }
+    </script>
+</body>
+</html>
