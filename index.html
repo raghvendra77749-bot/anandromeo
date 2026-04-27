@@ -3,110 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANAND GFX | Professional Thumbnail Downloader</title>
+    <title>ANAND GFX | Thumbnail Downloader</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         /* Modern Dark Theme by Raghvendra Singh */
         body { 
             font-family: 'Poppins', sans-serif; 
-            background: #0d0d0d; 
+            background: #0a0a0a; 
             color: #ffffff; 
             text-align: center; 
             padding: 20px;
             margin: 0;
         }
         .container { 
-            background: #1a1a1a; 
+            background: #151515; 
             padding: 40px 20px; 
-            border-radius: 25px; 
-            border: 2px solid #ffcc00; 
-            max-width: 600px; 
-            margin: 50px auto; 
-            box-shadow: 0 15px 35px rgba(255, 204, 0, 0.1);
+            border-radius: 30px; 
+            border: 1px solid #333; 
+            max-width: 500px; 
+            margin: 40px auto; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
         h1 { 
             color: #ffcc00; 
-            font-size: 32px; 
+            font-size: 35px; 
             margin-bottom: 5px; 
-            letter-spacing: 3px;
-            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: -1px;
         }
         .dev-name { 
-            font-size: 14px; 
-            color: #888; 
+            font-size: 13px; 
+            color: #666; 
             margin-bottom: 30px; 
-            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         input { 
-            padding: 15px; 
+            padding: 18px; 
             width: 85%; 
-            border-radius: 10px; 
+            border-radius: 12px; 
             border: 1px solid #333; 
-            background: #252525; 
+            background: #202020; 
             color: #fff; 
             outline: none; 
-            font-size: 16px;
-            transition: 0.3s;
+            font-size: 15px;
+            margin-bottom: 15px;
         }
         input:focus { border-color: #ffcc00; }
+        
         .btn-gen { 
-            padding: 15px 30px; 
+            padding: 16px; 
             background: #ffcc00; 
             color: #000; 
             border: none; 
-            border-radius: 10px; 
+            border-radius: 12px; 
             cursor: pointer; 
-            font-weight: bold; 
-            margin-top: 20px; 
-            width: 90%; 
-            font-size: 16px;
-            text-transform: uppercase;
+            font-weight: 700; 
+            width: 93%; 
+            font-size: 15px;
+            transition: 0.3s;
         }
-        .btn-gen:hover { background: #e6b800; transform: translateY(-2px); }
-        
-        #result-area { display: none; margin-top: 35px; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        img { 
-            width: 100%; 
-            border-radius: 15px; 
-            border: 2px solid #333; 
-            margin-bottom: 20px; 
-        }
-        .btn-download { 
-            display: block; 
-            background: #ffffff; 
-            color: #000; 
-            padding: 15px; 
-            text-decoration: none; 
-            border-radius: 10px; 
-            font-weight: bold; 
-            width: 85%; 
-            margin: 10px auto; 
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-download:hover { background: #cccccc; }
+        .btn-gen:hover { transform: scale(1.02); background: #f0c000; }
 
-        /* Donation Section Styles */
-        .donate-section {
-            margin-top: 30px;
-            border-top: 1px solid #333;
-            padding-top: 20px;
+        #result-area { display: none; margin-top: 30px; }
+        #thumb-preview { width: 100%; border-radius: 15px; border: 2px solid #333; }
+
+        .btn-download { 
+            display: inline-block;
+            background: #fff; 
+            color: #000; 
+            padding: 15px 30px; 
+            text-decoration: none; 
+            border-radius: 12px; 
+            font-weight: 700; 
+            margin-top: 15px;
+            width: 85%;
+        }
+
+        /* Donation Section */
+        .donate-box {
+            margin-top: 40px;
+            padding: 20px;
+            border: 1px dashed #444;
+            border-radius: 20px;
         }
         .btn-donate {
-            background: transparent;
+            background: #222;
             color: #ffcc00;
             border: 1px solid #ffcc00;
             padding: 10px 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .btn-donate:hover {
-            background: #ffcc00;
-            color: #000;
+            font-weight: 600;
         }
 
         /* QR Modal */
@@ -115,108 +103,74 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9);
-            z-index: 100;
+            z-index: 1000;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
-        .qr-card {
+        .qr-content {
             background: #fff;
-            padding: 20px;
-            border-radius: 20px;
+            padding: 25px;
+            border-radius: 25px;
             text-align: center;
-            max-width: 300px;
+            color: #000;
         }
-        .qr-card img {
-            width: 250px;
-            border: none;
-            margin: 0;
-        }
-        .qr-card p { color: #000; font-weight: bold; margin-top: 10px; }
-        .close-modal {
+        .qr-content img { width: 220px; height: 220px; border-radius: 10px; }
+        .close-btn {
             margin-top: 20px;
             color: #fff;
             cursor: pointer;
             text-decoration: underline;
         }
-
-        .footer { margin-top: 60px; color: #444; font-size: 12px; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>ANAND GFX</h1>
-        <div class="dev-name">Developed by Raghvendra Singh</div>
-        <p style="color: #bbb;">Download any YouTube Thumbnail in Ultra HD</p>
+        <div class="dev-name">By Raghvendra Singh</div>
         
-        <input type="text" id="yt-url" placeholder="Paste YouTube Video Link here...">
-        <button class="btn-gen" onclick="generate()">Show Thumbnail</button>
+        <input type="text" id="yt-link" placeholder="YouTube link paste karein...">
+        <button class="btn-gen" onclick="getThumb()">GENERATE THUMBNAIL</button>
         
         <div id="result-area">
-            <img id="thumb-preview" src="" alt="Thumbnail Preview">
-            <button class="btn-download" onclick="forceDownload()">⬇ DOWNLOAD TO FILES</button>
+            <img id="thumb-preview" src="" alt="Thumbnail">
+            <a id="download-link" class="btn-download" href="#" download="AnandGFX_Thumbnail.jpg">DOWNLOAD HD</a>
         </div>
 
-        <div class="donate-section">
-            <p style="font-size: 14px; color: #888;">Loved this tool?</p>
-            <button class="btn-donate" onclick="toggleQR(true)">☕ Support My Work</button>
+        <div class="donate-box">
+            <p style="color:#888; font-size: 13px;">Support My Work</p>
+            <button class="btn-donate" onclick="toggleModal(true)">GIVE A TIP ☕</button>
         </div>
     </div>
 
     <div id="qr-modal">
-        <div class="qr-card">
-            <img src="YOUR_QR_IMAGE_LINK" alt="Payment QR Code">
-            <p>Scan to Donate via UPI</p>
+        <div class="qr-content">
+            <p style="margin-bottom: 15px; font-weight: 700;">Scan to Pay</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=7665261158@ptaxis%26pn=Raghvendra%20Singh%26cu=INR" alt="UPI QR">
+            <p style="font-size: 12px; margin-top: 10px; color: #555;">UPI ID: 7665261158@ptaxis</p>
         </div>
-        <div class="close-modal" onclick="toggleQR(false)">Close [X]</div>
-    </div>
-
-    <div class="footer">
-        © 2026 ANAND GFX | ALL RIGHTS RESERVED
+        <div class="close-btn" onclick="toggleModal(false)">BACK TO SITE</div>
     </div>
 
     <script>
-        let imgUrl = "";
+        function getThumb() {
+            let url = document.getElementById('yt-link').value;
+            let id = "";
+            if(url.includes("v=")) { id = url.split("v=")[1].substring(0, 11); }
+            else if(url.includes("be/")) { id = url.split("be/")[1].substring(0, 11); }
 
-        function generate() {
-            let url = document.getElementById('yt-url').value;
-            let videoId = "";
-            
-            if(url.includes("v=")) {
-                videoId = url.split("v=")[1].substring(0, 11);
-            } else if(url.includes("be/")) {
-                videoId = url.split("be/")[1].substring(0, 11);
-            }
-            
-            if(videoId) {
-                imgUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-                document.getElementById('thumb-preview').src = imgUrl;
+            if(id != "") {
+                let highRes = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+                document.getElementById('thumb-preview').src = highRes;
+                document.getElementById('download-link').href = highRes;
                 document.getElementById('result-area').style.display = "block";
             } else {
-                alert("Bhai, sahi link dalo tabhi toh maza aayega!");
+                alert("Bhai link galat hai!");
             }
         }
 
-        async function forceDownload() {
-            try {
-                const response = await fetch(imgUrl);
-                const blob = await response.blob();
-                const blobUrl = window.URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = blobUrl;
-                link.download = 'Anand-GFX-Thumbnail.jpg'; 
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                window.URL.revokeObjectURL(blobUrl);
-            } catch (e) {
-                window.open(imgUrl, '_blank');
-            }
-        }
-
-        // Function to show/hide QR
-        function toggleQR(show) {
+        function toggleModal(show) {
             document.getElementById('qr-modal').style.display = show ? 'flex' : 'none';
         }
     </script>
